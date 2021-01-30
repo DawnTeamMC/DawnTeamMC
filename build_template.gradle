@@ -64,7 +64,7 @@ ext.modrinthDownloadLink = null
 ext.githubDownloadLink = null
 ext.releaseType = project.mod_default_release_type
 
-def includeMod(String dep) {
+ext.includeMod = { String dep ->
     dependencies.modApi(dep) {
         exclude(group: "net.fabricmc.fabric-api")
     }
