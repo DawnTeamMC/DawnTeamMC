@@ -1,6 +1,8 @@
 buildscript {
     repositories {
         jcenter()
+        gradlePluginPortal()
+        mavenLocal()
         maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
@@ -13,8 +15,6 @@ buildscript {
             name = 'CrowdinTranslate source'
             url = "https://minecraft.guntram.de/maven/"
         }
-        gradlePluginPortal()
-        mavenLocal()
     }
     dependencies {
         classpath "net.fabricmc:fabric-loom:0.5-SNAPSHOT"
@@ -35,7 +35,6 @@ apply plugin: net.dumbcode.gradlehook.GradleWebhookPlugin
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 apply plugin: org.ajoberstar.grgit.gradle.GrgitPlugin
 apply plugin: com.modrinth.minotaur.Minotaur
-apply plugin: 'de.guntram.mcmod.crowdin-translate'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
