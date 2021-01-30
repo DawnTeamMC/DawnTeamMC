@@ -62,13 +62,6 @@ ext.modrinthDownloadLink = null
 ext.githubDownloadLink = null
 ext.releaseType = project.mod_default_release_type
 
-repositories {
-    jcenter()
-    mavenLocal()
-    maven { url 'https://jitpack.io' }
-    maven { url 'http://maven.terraformersmc.com/'}
-}
-
 processResources {
     inputs.property "version", version
     filesMatching("fabric.mod.json") {
