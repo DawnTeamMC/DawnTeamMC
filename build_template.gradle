@@ -1,6 +1,20 @@
+import com.matthewprenger.cursegradle.CurseGradlePlugin
+import com.modrinth.minotaur.Minotaur
+import net.dumbcode.gradlehook.GradleWebhookPlugin
+import net.fabricmc.loom.LoomGradlePlugin
+import org.ajoberstar.grgit.gradle.GrgitPlugin
+
 buildscript {
     repositories {
         jcenter()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'TerraformersMC'
+            url = 'http://maven.terraformersmc.com/'
+        }
         maven {
             name = 'CrowdinTranslate source'
             url = "https://minecraft.guntram.de/maven/"
@@ -20,11 +34,40 @@ buildscript {
     }
 }
 
+apply plugin: 'java'
+apply plugin: 'de.guntram.mcmod.crowdin-translate'
+apply plugin: GradleWebhookPlugin
+apply plugin: CurseGradlePlugin
+apply plugin: GrgitPlugin
+apply plugin: Minotaur
+apply plugin: LoomGradlePlugin
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.mod_id
 group = "com.github.DawnTeam"
+
+crowdintranslate.setCrowdinProjectname 'dawnteam'
+crowdintranslate.setMinecraftProjectName project.mod_id
+crowdintranslate.setJsonSourceName project.mod_id
+
+ext.curseReleaseType = "release"
+ext.releaseChangelog = "No Changelog Available"
+ext.stabilitySuffix = ""
+ext.curseforgeDownloadLink = null
+ext.modrinthDownloadLink = null
+ext.githubDownloadLink = null
+ext.releaseType = project.mod_default_release_type
+
+def includeMod(String dep) {
+    dependencies.modApi(dep) {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+    dependencies.include(dep) {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+}
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
@@ -40,8 +83,71 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+processResources {
+    inputs.property "version", version
+    filesMatching("fabric.mod.json") {
+        expand project.properties
+        expand "version": version
+    }
+}
+
+build {
+    dependsOn downloadTranslations
+}
+
+java {
+    withSourcesJar()
+}
+
 jar {
     from("LICENSE") {
         rename { "${it}_${project.mod_id}" }
     }
+}
+
+curseforge {
+    if (System.getenv().CURSEFORGE_TOKEN) {
+        apiKey = System.getenv().CURSEFORGE_TOKEN
+    } else {
+        println "No CURSEFORGE_TOKEN specified"
+    }
+    project {
+        id = project.curseforge_id
+        releaseType = curseReleaseType
+        project.curseforge_game_versions.split(", ").each {
+            String gameVersion -> addGameVersion gameVersion
+        }
+        mainArtifact(file("${project.buildDir}/libs/${project.mod_id}-${version}.jar"))
+        mainArtifact.displayName = "$project.mod_name v$version"
+        if (!project.curseforge_embedded_libraries.isEmpty() || !project.curseforge_required_dependencies.isEmpty() || !project.curseforge_optional_dependencies.isEmpty()) {
+            relations {
+                if (!project.curseforge_embedded_libraries.isEmpty()) {
+                    project.curseforge_embedded_libraries.split(", ").each {
+                        String dep -> embeddedLibrary dep
+                    }
+                }
+                if (!project.curseforge_required_dependencies.isEmpty()) {
+                    project.curseforge_required_dependencies.split(", ").each {
+                        String dep -> requiredDependency dep
+                    }
+                }
+                if (!project.curseforge_optional_dependencies.isEmpty()) {
+                    project.curseforge_optional_dependencies.split(", ").each {
+                        String dep -> optionalDependency dep
+                    }
+                }
+            }
+        }
+        afterEvaluate {
+            uploadTask.dependsOn(remapJar)
+        }
+    }
+    options {
+        forgeGradleIntegration = false
+    }
+}
+tasks.getByName("curseforge").doLast {
+    def fileId = (tasks.getByName("curseforge$curseforge_id").property("mainArtifact"))['fileID']
+    curseforgeDownloadLink = "https://www.curseforge.com/minecraft/mc-mods/$project.curseforge_slug/files/$fileId"
+    sendDiscordWebhook()
 }
