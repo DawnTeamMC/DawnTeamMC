@@ -35,8 +35,3 @@ buildscript {
         classpath "gradle.plugin.com.modrinth.minotaur:Minotaur:1.1.0"
     }
 }
-
-plugins {
-    id 'fabric-loom' version '0.5-SNAPSHOT'
-    id 'maven-publish'
-}
