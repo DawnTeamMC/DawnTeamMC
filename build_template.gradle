@@ -9,12 +9,12 @@ buildscript {
             name = 'TerraformersMC'
             url = 'http://maven.terraformersmc.com/'
         }
-        gradlePluginPortal()
-        mavenLocal()
         maven {
             name = 'CrowdinTranslate source'
             url = "https://minecraft.guntram.de/maven/"
         }
+        gradlePluginPortal()
+        mavenLocal()
     }
     dependencies {
         classpath "net.fabricmc:fabric-loom:0.5-SNAPSHOT"
@@ -27,13 +27,16 @@ buildscript {
     }
 }
 
-apply plugin: 'de.guntram.mcmod.crowdin-translate'
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 apply plugin: net.dumbcode.gradlehook.GradleWebhookPlugin
 apply plugin: com.matthewprenger.cursegradle.CurseGradlePlugin
 apply plugin: org.ajoberstar.grgit.gradle.GrgitPlugin
 apply plugin: com.modrinth.minotaur.Minotaur
-apply plugin: 'maven-publish'
 apply plugin: net.fabricmc.loom.LoomGradlePlugin
+apply plugin: 'de.guntram.mcmod.crowdin-translate'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -59,6 +62,7 @@ repositories {
     jcenter()
     mavenLocal()
     maven { url 'https://jitpack.io' }
+    maven { url 'http://maven.terraformersmc.com/'}
 }
 
 processResources {
