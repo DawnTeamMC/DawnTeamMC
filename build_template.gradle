@@ -37,6 +37,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: "maven"
 apply plugin: 'maven-publish'
 apply plugin: CrowdinTranslatePlugin
 apply plugin: GradleWebhookPlugin
@@ -58,7 +59,7 @@ crowdintranslate.setMinecraftProjectName project.mod_id
 crowdintranslate.setJsonSourceName project.mod_id
 
 ext.curseReleaseType = "release"
-ext.releaseChangelog = "No Changelog Available"
+ext.releaseChangelog = "No changelog available"
 ext.stabilitySuffix = ""
 ext.curseforgeDownloadLink = null
 ext.modrinthDownloadLink = null
@@ -108,6 +109,69 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.mod_id}" }
     }
+}
+
+task generateChangelog {
+    def changes = StringBuilder.getDeclaredConstructor().newInstance()
+    if (!project.hasProperty("lastTag") || !project.hasProperty("currentTag")) {
+        println "Missing lastTag or currentTag parameters, aborting changelog creation"
+        return
+    }
+    def lastTag = project.getProperty("lastTag")
+    def currentTag = project.getProperty("currentTag")
+    def commits = "git log --max-count=$project.changelog_max_commit_search --pretty=format:\"%b\" $lastTag..$currentTag".execute()
+    println "Last version: $lastTag"
+    println "Current version: $currentTag"
+
+    if (currentTag.contains("-alpha")) {
+        releaseType = "alpha"
+        curseReleaseType = "alpha"
+        stabilitySuffix = " (Alpha)"
+    } else if (currentTag.contains("-beta")) {
+        releaseType = "beta"
+        curseReleaseType = "beta"
+        stabilitySuffix = " (Beta)"
+    } else if (currentTag.contains("-pre")) {
+        releaseType = "pre"
+        curseReleaseType = "beta"
+        stabilitySuffix = " (Pre-Release)"
+    } else if (currentTag.contains("-rc")) {
+        releaseType = "rc"
+        curseReleaseType = "beta"
+        stabilitySuffix = " (Release Candidate)"
+    } else if (!currentTag.contains("-")) {
+        releaseType = "stable"
+    }
+    println "Release type: $releaseType"
+
+    commits.in.eachLine { line ->
+        def processedLine = line.toString()
+        if (processedLine.startsWith("\"")) {
+            processedLine = processedLine.substring(1)
+        }
+        if (processedLine.endsWith("\"")) {
+            processedLine = processedLine.substring(0, processedLine.length() - 1)
+        }
+        println "Reading line: $processedLine"
+
+        if (processedLine.startsWith("- ")) {
+            println "Adding changelog line:"
+            println "  $processedLine"
+            if (changes.length() == 0) {
+                changes << processedLine
+            } else {
+                changes << "\n$processedLine"
+            }
+        }
+    }
+    commits.err.eachLine { line -> println line }
+    commits.waitFor()
+    println "Changelog:"
+    releaseChangelog = changes.toString()
+    if (releaseChangelog.isEmpty()) {
+        releaseChangelog = "No changelog available"
+    }
+    println releaseChangelog
 }
 
 curseforge {
@@ -251,69 +315,6 @@ String getBranch() {
 
     def branch = grgit.branch.current().name
     return branch.substring(branch.lastIndexOf("/") + 1)
-}
-
-task generateChangelog {
-    def changes = StringBuilder.getDeclaredConstructor().newInstance()
-    if (!project.hasProperty("lastTag") || !project.hasProperty("currentTag")) {
-        println "Missing lastTag or currentTag parameters, aborting changelog creation"
-        return
-    }
-    def lastTag = project.getProperty("lastTag")
-    def currentTag = project.getProperty("currentTag")
-    def commits = "git log --max-count=$project.changelog_max_commit_search --pretty=format:\"%b\" $lastTag..$currentTag".execute()
-    println "Last version: $lastTag"
-    println "Current version: $currentTag"
-
-    if (currentTag.contains("-alpha")) {
-        releaseType = "alpha"
-        curseReleaseType = "alpha"
-        stabilitySuffix = " (Alpha)"
-    } else if (currentTag.contains("-beta")) {
-        releaseType = "beta"
-        curseReleaseType = "beta"
-        stabilitySuffix = " (Beta)"
-    } else if (currentTag.contains("-pre")) {
-        releaseType = "pre"
-        curseReleaseType = "beta"
-        stabilitySuffix = " (Pre-Release)"
-    } else if (currentTag.contains("-rc")) {
-        releaseType = "rc"
-        curseReleaseType = "beta"
-        stabilitySuffix = " (Release Candidate)"
-    } else if (!currentTag.contains("-")) {
-        releaseType = "stable"
-    }
-    println "Release type: $releaseType"
-
-    commits.in.eachLine { line ->
-        def processedLine = line.toString()
-        if (processedLine.startsWith("\"")) {
-            processedLine = processedLine.substring(1)
-        }
-        if (processedLine.endsWith("\"")) {
-            processedLine = processedLine.substring(0, processedLine.length() - 1)
-        }
-        println "Reading line: $processedLine"
-
-        if (processedLine.startsWith("- ")) {
-            println "Adding changelog line:"
-            println "  $processedLine"
-            if (changes.length() == 0) {
-                changes << processedLine
-            } else {
-                changes << "\n$processedLine"
-            }
-        }
-    }
-    commits.err.eachLine { line -> println line }
-    commits.waitFor()
-    println "Changelog:"
-    releaseChangelog = changes.toString()
-    if (releaseChangelog.isEmpty()) {
-        releaseChangelog = "No changelog available"
-    }
-    println releaseChangelog
 }
 
 void sendDiscordWebhook() {
