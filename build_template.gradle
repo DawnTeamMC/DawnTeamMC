@@ -37,7 +37,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: CrowdinTranslatePlugin
 apply plugin: GradleWebhookPlugin
 apply plugin: CurseGradlePlugin
