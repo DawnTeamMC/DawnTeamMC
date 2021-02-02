@@ -110,6 +110,22 @@ jar {
     }
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(sourcesJar) {
+                builtBy remapSourcesJar
+            }
+
+            afterEvaluate {
+                artifact remapJar
+            }
+        }
+    }
+
+    setupRepositories(repositories)
+}
+
 task generateChangelog {
     def changes = StringBuilder.getDeclaredConstructor().newInstance()
     if (!project.hasProperty("lastTag") || !project.hasProperty("currentTag")) {
