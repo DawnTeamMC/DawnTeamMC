@@ -8,7 +8,6 @@ import com.modrinth.minotaur.TaskModrinthUpload
 
 buildscript {
     repositories {
-        jcenter()
         maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
@@ -20,6 +19,10 @@ buildscript {
         maven {
             name = 'CrowdinTranslate source'
             url = "https://minecraft.guntram.de/maven/"
+        }
+        maven {
+            name = 'CrowdinTranslate source'
+            url = "https://maven.shedaniel.me/"
         }
         gradlePluginPortal()
         mavenLocal()
