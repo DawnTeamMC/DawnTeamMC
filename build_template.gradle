@@ -21,7 +21,7 @@ buildscript {
             url = "https://minecraft.guntram.de/maven/"
         }
         maven {
-            name = 'CrowdinTranslate source'
+            name = 'Shedaniel'
             url = "https://maven.shedaniel.me/"
         }
         gradlePluginPortal()
@@ -125,6 +125,10 @@ publishing {
             }
         }
     }
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 task generateChangelog {
