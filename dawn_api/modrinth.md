@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/dawn_api/header.png)
 
-The Dawn API for Minecraft 1.16 facilitates the creation of features for other mods. It also is bundled with some enchantments and effects used by other mods.
+The Dawn API is a library mod that facilitates the creation of features for other mods. It also is bundled with some commands that can be used for mapmaking.
 
 The Dawn API requires [Fabric Loader](https://fabricmc.net/use/) and [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api)
 
