@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/mubble/header.png)
 
-Mubble is a mod for Minecraft 1.16 that brings Nintendo and some gaming franchises to your world. Super Mario, Tetris, Castlevania, Celeste, Sonic, Pokémon, and way more universes await. Mubble adds varieties of new blocks, items, entities.
+Mubble brings Nintendo and some gaming franchises to your world. Super Mario, Tetris, Castlevania, Celeste, Sonic, Pokémon, and way more universes await.
 
 Mubble requires [Fabric Loader](https://fabricmc.net/use/), [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [Dawn API](https://modrinth.com/mod/dawn)
 
@@ -23,6 +23,8 @@ Want to help with the translations of our mods? Check out our [Crowdin project](
 - Coins from Super Mario
 - Lightsabers from Star Wars
 
+More information and screenshots of all the added features can be found on the [Wiki](https://github.com/DawnTeamMC/Mubble/wiki)
+
 ## Screenshots
 ![Toads](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/mubble/screenshots/toads_camping.png)
 ![SMB blocks](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/mubble/screenshots/smm2_smb.png)
@@ -41,6 +43,6 @@ Pokémon, A Hat in Time, Deltarune, Professor Layton, Petscop, Baldi's Basics...
 ![And even more costumes!](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/mubble/screenshots/costumes_4.png)
 Virtual googles, christmas hats, headphones
 
-Mubble is made for Fabric, and there are no plans to port the newer version to Forge.
+*Mubble is made for Fabric, and there are no current plans to port the newer versions to Forge.*
 
-However, [an outdated version for Forge](https://www.curseforge.com/minecraft/mc-mods/mubble-forge) exists (it has less features).
+*However, [an outdated version for Forge](https://www.curseforge.com/minecraft/mc-mods/mubble-forge) exists (it has less features).*

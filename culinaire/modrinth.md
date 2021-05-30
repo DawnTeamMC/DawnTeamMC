@@ -7,14 +7,14 @@ Culinaire requires [Fabric Loader](https://fabricmc.net/use/), [Fabric API](http
 Want to help with the translations of our mods? Check out our [Crowdin project](https://crowdin.com/project/dawnteam)!
 
 ## Features
-- Sandwiches that can contain up to 3 food items
-- Craft tea bags using a piece of paper, a piece of string and ingredients, to then use them in kettle and brew tea bottles!
-- Pour milk into a cauldron and wait for it to coagulate to obtain cheese!
-- Grow lettuce, tomatoes
-- Craft marshmallows, chocolate, apple and sweet berry pies
-- And more!
+- [Sandwiches](https://github.com/DawnTeamMC/Culinaire/wiki/Making-a-sandwich)
+- [Tea brewing](https://github.com/DawnTeamMC/Culinaire/wiki/Brewing-tea)
+- [Lettuce, tomatoes, marshmallows, chocolate, apple and sweet berry pies](https://github.com/DawnTeamMC/Culinaire/wiki/Items)
+- Milk coagulation (cauldron + milk + time = cheese)
+
+More information and screenshots of all the added features can be found on the [Wiki](https://github.com/DawnTeamMC/Culinaire/wiki)
 
 ## Screenshots
 ![Most of the items](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/culinaire/screenshots/items.png)
 
-Culinaire is made for Fabric, and there are no plans to port it to Forge.
+*Culinaire is made for Fabric, and there are no current plans to port it to Forge.*
