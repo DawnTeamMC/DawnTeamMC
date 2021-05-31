@@ -2,7 +2,7 @@ import com.matthewprenger.cursegradle.CurseGradlePlugin
 import com.modrinth.minotaur.Minotaur
 //import de.guntram.mcmod.crowdintranslate.GradlePlugin.CrowdinTranslatePlugin
 import net.dumbcode.gradlehook.GradleWebhookPlugin
-import net.fabricmc.loom.LoomGradlePlugin
+import net.fabricmc.loom.bootstrap.LoomGradlePluginBootstrap
 import org.ajoberstar.grgit.gradle.GrgitPlugin
 import com.modrinth.minotaur.TaskModrinthUpload
 
@@ -46,7 +46,7 @@ apply plugin: GradleWebhookPlugin
 apply plugin: CurseGradlePlugin
 apply plugin: GrgitPlugin
 apply plugin: Minotaur
-apply plugin: LoomGradlePlugin
+apply plugin: LoomGradlePluginBootstrap
 
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
