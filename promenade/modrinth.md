@@ -2,7 +2,7 @@
 
 *Previously known as Wild Explorer.*
 
-Promenade is a mod for Minecraft 1.16 that adds fancy-looking biomes and structures to the Minecraft world generation.
+Promenade adds fancy-looking biomes and structures to the Minecraft world generation. It aims at beautifying the process of exploring the world of Minecraft.
 
 Promenade requires [Fabric Loader](https://fabricmc.net/use/), [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [Dawn API](https://modrinth.com/mod/dawn)
 
