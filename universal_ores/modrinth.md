@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/DawnTeamMC/DawnTeamMC/master/universal_ores/header.png)
 
-Universal Ores adds new vanilla ores variants for Andesite, Diorite, Granite and Tuff that generate naturally.
+Universal Ores adds new vanilla ores variants for andesite, diorite, granite and tuff that generate naturally.
 
 Universal Ores requires [Fabric Loader](https://fabricmc.net/use/), [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) and [Dawn API](https://modrinth.com/mod/dawn)
 
