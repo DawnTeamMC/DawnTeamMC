@@ -14,10 +14,10 @@ buildscript {
         }
         maven {
             name = 'TerraformersMC'
-            url = 'http://maven.terraformersmc.com/'
+            url = 'https://maven.terraformersmc.com/'
         }
         maven {
-            name = 'CrowdinTranslate source'
+            name = 'CrowdinTranslate'
             url = "https://minecraft.guntram.de/maven/"
         }
         maven {
@@ -250,7 +250,7 @@ task modrinth(type: TaskModrinthUpload) {
     }
     projectId = project.modrinth_id
     versionNumber = version
-    versionName = "$project.mod_name v$version"
+    versionName = project.mod_name
     uploadFile = file("${project.buildDir}/libs/${project.mod_id}-${version}.jar")
     changelog = releaseChangelog
     releaseType = curseReleaseType

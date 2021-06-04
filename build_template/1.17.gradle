@@ -17,7 +17,7 @@ buildscript {
             url = 'https://maven.terraformersmc.com/'
         }
         maven {
-            name = 'CrowdinTranslate source'
+            name = 'CrowdinTranslate'
             url = "https://minecraft.guntram.de/maven/"
         }
         maven {
