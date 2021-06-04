@@ -1,6 +1,6 @@
 import com.matthewprenger.cursegradle.CurseGradlePlugin
 import com.modrinth.minotaur.Minotaur
-//import de.guntram.mcmod.crowdintranslate.GradlePlugin.CrowdinTranslatePlugin
+import de.guntram.mcmod.crowdintranslate.GradlePlugin.CrowdinTranslatePlugin
 import net.dumbcode.gradlehook.GradleWebhookPlugin
 import net.fabricmc.loom.bootstrap.LoomGradlePluginBootstrap
 import org.ajoberstar.grgit.gradle.GrgitPlugin
@@ -35,13 +35,13 @@ buildscript {
         classpath "org.kohsuke:github-api:1.114"
         classpath "org.ajoberstar.grgit:grgit-gradle:4.1.0"
         classpath "gradle.plugin.com.modrinth.minotaur:Minotaur:1.1.0"
-        //classpath "de.guntram.mcmod:crowdin-translate:1.3+1.17-alpha20w49a"
+        classpath "de.guntram.mcmod:crowdin-translate:1.3+1.17-pre5"
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-//apply plugin: CrowdinTranslatePlugin
+apply plugin: CrowdinTranslatePlugin
 apply plugin: GradleWebhookPlugin
 apply plugin: CurseGradlePlugin
 apply plugin: GrgitPlugin
@@ -56,9 +56,9 @@ group = "com.github.DawnTeam"
 
 version = getVersion()
 
-//crowdintranslate.setCrowdinProjectname 'dawnteam'
-//crowdintranslate.setMinecraftProjectName project.mod_id
-//crowdintranslate.setJsonSourceName project.mod_id
+crowdintranslate.setCrowdinProjectname 'dawnteam'
+crowdintranslate.setMinecraftProjectName project.mod_id
+crowdintranslate.setJsonSourceName project.mod_id
 
 ext.curseReleaseType = "release"
 ext.releaseChangelog = "No changelog available"
@@ -96,7 +96,7 @@ processResources {
 }
 
 build {
-    //dependsOn downloadTranslations
+    dependsOn downloadTranslations
 }
 
 java {
